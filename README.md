@@ -1,5 +1,5 @@
 # College-project for lambton college by Group3 
-Team Member:
+Team Member for lambton college:
 Nithin Tata
 Sree Rukmini Thummu
 Sai Charitha Paleru
