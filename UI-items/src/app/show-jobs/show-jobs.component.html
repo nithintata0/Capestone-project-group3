@@ -1,0 +1,97 @@
+<div *ngIf="!showController">
+  <h1
+    style="
+      width: 100%;
+      padding: 10px;
+      box-shadow: 0 8px 16px 0 rgb(0 0 0 / 20%);
+    "
+  >
+    {{ userName }}
+  </h1>
+</div>
+
+<div style="padding: 10px" *ngIf="loading">
+  <nz-card style="width: 100%; margin-top: 16px" [nzLoading]="loading">
+  </nz-card>
+  <nz-card style="width: 100%; margin-top: 16px" [nzLoading]="loading">
+  </nz-card
+  ><nz-card style="width: 100%; margin-top: 16px" [nzLoading]="loading">
+  </nz-card
+  ><nz-card style="width: 100%; margin-top: 16px" [nzLoading]="loading">
+  </nz-card
+  ><nz-card style="width: 100%; margin-top: 16px" [nzLoading]="loading">
+  </nz-card>
+</div>
+<div
+  style="padding: 10px"
+  style="display: grid; grid-template-columns: 350px auto; gap: 10px"
+>
+  <div style="height: calc(100vh - 64px); overflow-y: scroll">
+    <ng-container *ngFor="let item of jobsProfiles">
+      <div class="card" (click)="changeJD(item)">
+        <!-- <div [innerHTML]="item.jobDesc"></div> -->
+        <h2 *ngIf="item.jobTitle">{{ item.jobTitle | titlecase }}</h2>
+        <p>Location: {{ item.loation | titlecase }}</p>
+        <p>Type: {{ item.jobType | titlecase }}</p>
+        <div style="font-size: 18px;
+        display: flex;
+        justify-content: space-evenly;" *ngIf="showController"> 
+          <div>
+           
+            <i nz-icon nzType="delete" nzTheme="fill" style="color: red;cursor: pointer;" (click)="deleteIt(item.id)"></i>
+          </div>
+          <div>
+            
+            <i nz-icon nzType="edit" nzTheme="fill"  style="color: blue;cursor: pointer;" (click)="goToEdit(item.id)"></i>
+          </div>
+        </div>
+        <input
+          type="file"
+          #uplaod
+          hidden
+          name=""
+          id=""
+          (change)="processFile($event, item)"
+        />
+        <!-- <button
+          *ngIf="!userJobProfile.includes(item.id)"
+          nz-button
+          nzType="primary"
+          (click)="uplaod.click()"
+        >
+          Uplaod your Resume
+        </button> -->
+        <div *ngIf="userJobProfile.includes(item.id)" style="color: green">
+          Already Applied
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div>
+    <div class="card" *ngIf="showJD">
+      <h2 *ngIf="showJD.jobTitle">{{ showJD.jobTitle | titlecase }}</h2>
+      <p>Location: {{ showJD.loation | titlecase }}</p>
+      <p>Type: {{ showJD.jobType | titlecase }}</p>
+      <div [innerHTML]="showJD.jobDesc"></div>
+      <input
+        type="file"
+        #uplaod
+        hidden
+        name=""
+        id=""
+        (change)="processFile($event, showJD)"
+      />
+      <button
+        *ngIf="!userJobProfile.includes(showJD.id)"
+        nz-button
+        nzType="primary"
+        (click)="uplaod.click()"
+      >
+        Uplaod your Resume
+      </button>
+      <div *ngIf="userJobProfile.includes(showJD.id)" style="color: green">
+        Already Applied
+      </div>
+    </div>
+  </div>
+</div>

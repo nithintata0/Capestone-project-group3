@@ -1,0 +1,58 @@
+<div class="createjob">
+  <div>
+    <h1>Add Jobs</h1>
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <div>
+        <div>Job Title<span class="requriedValue">*</span></div>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input your response">
+            <div>
+              <input
+                nz-input
+                placeholder="Job Title"
+                formControlName="jobTitle"
+              />
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div>
+        <div>Location<span class="requriedValue">*</span></div>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input your response">
+            <div>
+              <input
+                nz-input
+                placeholder="Location"
+                formControlName="loation"
+              />
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div>
+        <div>Job Type<span class="requriedValue">*</span></div>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input your response">
+            <div>
+              <input
+                nz-input
+                placeholder="Job Type"
+                formControlName="jobType"
+              />
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div>Job Description<span class="requriedValue">*</span></div>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your response">
+          <ckeditor [editor]="Editor" formControlName="jobDesc"></ckeditor>
+        </nz-form-control>
+      </nz-form-item>
+      <br />
+
+      <button nz-button nzType="primary">{{this.docId  ?'update':'Submit'}}</button>
+    </form>
+  </div>
+</div>
