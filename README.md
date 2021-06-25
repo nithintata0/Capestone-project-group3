@@ -3,4 +3,4 @@ Team Member for lambton college:
 Nithin Tata
 Sree Rukmini Thummu
 Sai Charitha Paleru
-Nithin Tata
+Ramkiran Sampathi
