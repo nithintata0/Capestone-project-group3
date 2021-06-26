@@ -94,7 +94,7 @@ def extract_text_from_pdf(files_list):
 
 
 
-    def resume_df(files_list, jd_file_name):
+def resume_df(files_list, jd_file_name):
     
     df1 = extract_text_from_pdf(files_list)
     df2 = parsing_jd(jd_file_name)
