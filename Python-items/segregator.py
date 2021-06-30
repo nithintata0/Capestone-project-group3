@@ -120,5 +120,5 @@ def resume_df(files_list, jd_file_name):
     return result[1:]
 
 
-    resume_df(resume_list, 'sample1')
+    resume_df(resume_list, 'sample1').head()
 
