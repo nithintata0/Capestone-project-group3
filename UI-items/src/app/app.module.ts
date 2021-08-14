@@ -27,6 +27,9 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import { NZ_ICONS } from 'ng-zorro-antd/icon';
 import { IconDefinition } from '@ant-design/icons-angular';
+import { AdminViewProfileComponent } from './admin-view-profile/admin-view-profile.component';
+import { AdminHeaderComponent } from './admin-header/admin-header.component';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 
 const antDesignIcons = AllIcons as {
   [key: string]: IconDefinition;
@@ -38,7 +41,9 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     HomeComponent,
     ShowJobsComponent,
     AddJobComponent,
-    AdminComponent
+    AdminComponent,
+    AdminViewProfileComponent,
+    AdminHeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +51,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    NzDrawerModule,
     NzCardModule,
     NzFormModule,
     FormsModule,

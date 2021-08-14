@@ -1,0 +1,151 @@
+<!-- <div
+  style="
+    box-shadow: 0 8px 16px 0 rgb(0 0 0 / 20%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 100px;
+  "
+>
+  <h1 style="padding: 10px">
+    {{ userName }}
+  </h1>
+  <span
+    [routerLink]="['/add-jobs']"
+    routerLinkActive="router-link-active"
+    style="cursor: pointer; color: blue"
+    >Add Jobs</span
+  >
+</div> -->
+<app-admin-header></app-admin-header>
+
+<br />
+<section style="display: grid; grid-template-columns: 32% 32% 32%; gap: 1%">
+  <div class="makeScroll">
+    <h1>Jobs</h1>
+    <ng-container *ngFor="let item of jobsProfiles">
+      <div class="jobs card" (click)="getJobAppliedUsers(item)">
+        <h2 *ngIf="item.jobTitle">{{ item.jobTitle | titlecase }}</h2>
+        <p>Location: {{ item.loation | titlecase }}</p>
+        <p>Type: {{ item.jobType | titlecase }}</p>
+      </div>
+    </ng-container>
+  </div>
+  <div class="makeScroll">
+    <h1>Users</h1>
+    <button (click)="sortProfile()" *ngIf="jobAppliedUsers.length >0" nz-button nzType="primary" style="width: 100%;"  >Sort Users</button>
+
+    <ng-container *ngFor="let item of jobAppliedUsers">
+      <div class="jobs card" (click)="getUserApplication(item)">
+        <h2 *ngIf="item.jobTitle  && !item['resumeData']['name']  ">{{ item.userName | titlecase }}</h2>
+        <h2 *ngIf="item['resumeData']['name']">{{ item["resumeData"]["name"] }}</h2>
+        <p>Job Type: {{ item.jobType | titlecase }}</p>
+        <p>Date: {{ item.date | date }}</p>
+        <p>{{ item.resumeValue | number : '1.2-5'}}</p>
+      </div>
+    </ng-container>
+  </div>
+  <div class="makeScroll">
+    <h1>Details</h1>
+    <div class="card" *ngIf="userApplication">
+      <ng-container  *ngIf="!userApplication['resumeData']" >
+      <h1>{{ userApplication.userName }}</h1>
+      <p>Job Type: {{ userApplication.jobType | titlecase }}</p>
+      <p> Applied Date : {{ userApplication.date | date }}</p>
+    </ng-container>
+     
+      <ng-container  *ngIf="userApplication['resumeData']" >
+        <p *ngIf="userApplication['resumeData']['name']">
+          Name :{{ userApplication["resumeData"]["name"] }}
+        </p>
+        <p *ngIf="userApplication['resumeData']['phone']">
+          Mobile Number :{{ userApplication["resumeData"]["phone"] }}
+        </p>
+        <p>Job Type: {{ userApplication.jobType | titlecase }}</p>
+        <p> Applied Date : {{ userApplication.date | date }}</p>
+       
+      <p *ngIf="userApplication['resumeData']['total_exp']">
+        Total Exprience :{{ userApplication["resumeData"]["total_exp"] }}
+      </p>
+      <div *ngIf="userApplication['noResumeData']">
+        <h1>Unable to prase the resume</h1>
+      </div>
+      <div *ngIf="!userApplication['noResumeData']">
+        <ng-container
+          *ngIf="userApplication['resumeData']['skills'].length > 0"
+        >
+          <h2>Skills</h2>
+          <ol>
+            <ng-container
+              *ngFor="let item of userApplication['resumeData']['skills']"
+            >
+              <li>{{ item }}</li>
+            </ng-container>
+          </ol>
+        </ng-container>
+        <ng-container
+          *ngIf="
+            userApplication['resumeData']['Companies worked at'].length > 0
+          "
+        >
+          <h2>Companies worked at</h2>
+          <ol>
+            <ng-container
+              *ngFor="
+                let item of userApplication['resumeData']['Companies worked at']
+              "
+            >
+              <li>{{ item }}</li>
+            </ng-container>
+          </ol>
+        </ng-container>
+        <ng-container
+          *ngIf="userApplication['resumeData']['university'].length > 0"
+        >
+          <h2>University</h2>
+          <ol>
+            <ng-container
+              *ngFor="let item of userApplication['resumeData']['university']"
+            >
+              <li>{{ item }}</li>
+            </ng-container>
+          </ol>
+        </ng-container>
+
+        <ng-container
+          *ngIf="userApplication['resumeData']['degree'].length > 0"
+        >
+          <h2>Degree</h2>
+          <ol>
+            <ng-container
+              *ngFor="let item of userApplication['resumeData']['degree']"
+            >
+              <li>{{ item }}</li>
+            </ng-container>
+          </ol>
+        </ng-container>
+
+        <ng-container
+          *ngIf="userApplication['resumeData']['designition'].length > 0"
+        >
+          <h2>designition</h2>
+          <ol>
+            <ng-container
+              *ngFor="let item of userApplication['resumeData']['designition']"
+            >
+              <li>{{ item }}</li>
+            </ng-container>
+          </ol>
+        </ng-container>
+      </div>
+    </ng-container>
+      <a [href]="userApplication.url"  target="_blank" #downlaoIt hidden>
+        Download Resume
+      </a>
+      <button (click)="downlaoIt.click()" nz-button nzType="primary">Download Resume </button>
+      <br>
+      <br>
+    </div>
+  </div>
+</section>

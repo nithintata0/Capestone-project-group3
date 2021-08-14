@@ -96,4 +96,4 @@ def normalize(words):
     words = remove_stopwords(words)
     words = stem_words(words)
     words = lemmatize_verbs(words)
-    return words
+    return " ".join(words)

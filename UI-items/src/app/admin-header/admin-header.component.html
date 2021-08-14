@@ -1,0 +1,33 @@
+<nz-drawer
+[nzClosable]="false"
+[nzVisible]="visible"
+nzPlacement="right"
+nzTitle="Menu"
+(nzOnClose)=" this.visible = false;"
+>
+<ng-container *nzDrawerContent>
+  <p [routerLink]="['/admin']">Home</p>
+  <p [routerLink]="['/admin/view-profiles']">View Profiles</p>
+  <p [routerLink]="['/add-jobs']">Add Jobs</p>
+  <!-- <p>Some contents...</p> -->
+</ng-container>
+</nz-drawer>
+<div
+  style="
+    box-shadow: 0 8px 16px 0 rgb(0 0 0 / 20%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 100px;
+  "
+>
+  <h1 style="padding: 10px">
+    {{ userName }}
+  </h1>
+  <span>
+    <i nz-icon nzType="menu" style="     font-size: 24px;"  (click)="    this.visible = true;" nzTheme="outline"></i>
+</span>
+</div>
+
+

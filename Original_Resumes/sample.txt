@@ -1,0 +1,23 @@
+The Value You Deliver
+Work with other BI team members to develop Informatica mappings and PL/SQL code to satisfy business requirements
+Analyze data requirements and their impact to the system
+Perform administrative duties for Informatica Power Center application
+Execute unit tests to ensure the accuracy of code changes, and to verify that data integrity and performance requirements are met
+Participate in team’s on-call support schedule, works on incident and enhancement/maintenance tickets assignments and delivers excellent technical support
+Create and maintains technical documents, including data models
+ 
+What We’re Looking For:
+University Degree, preferably in Computer Science
+2+ years of experience with SQL and PL/SQL development
+1+ years of experience with ETL development, preferably with Informatica Power Center
+1+ years of development experience with Oracle database.
+1+ years of experience with Snowflake data warehouse environment
+ 
+The Skills You Bring:
+Experience in a Data Warehouse/Business Intelligence environment
+Experience with data modelling tools
+Development experience in Mutual Funds industry is an asset
+Strong technical and data analysis skills
+Excellent problem solving skills
+Customer service oriented
+Good communication skills

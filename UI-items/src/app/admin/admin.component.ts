@@ -34,31 +34,7 @@ export class AdminComponent implements OnInit {
   }
   getUserDetails() {
 
-    this.auth.authState
-
-      .subscribe(
-        (user) => {
-          console.log(user)
-
-          if (user) {
-            this.userName = user.displayName
-
-            const admins = ['thumusreerukmini9@gmail.com', 'ramkiransampathi@gmail.com', 'saicharitha905@gmail.com', 'tatanithin007@gmail.com', 'jaswanthtata@gmail.com']
-            const userEmail = user.email
-            console.log(admins.includes(userEmail))
-            if (admins.includes(userEmail)) {
-
-            } else {
-              this.router.navigate(['jobs'])
-            }
-          
-          } else {
-            this.router.navigate(['home'])
-          }
-
-
-        }
-      )
+  
   }
 
 }

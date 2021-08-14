@@ -1,8 +1,10 @@
-# Python available modules
+# Python available modulses
 import glob
 import os
-from typing import AsyncContextManager
+import textract
 from gensim.summarization.summarizer import summarize
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.neighbors import NearestNeighbors
 import pandas as pd
 import numpy as np
 from os.path import isfile, join
@@ -10,12 +12,11 @@ from io import StringIO
 from collections import Counter
 import nltk
 nltk.download('wordnet')
-print("Download completed")
-# import spacy
-# nlp = spacy.load('en_core_web_sm')
-# from spacy.matcher import PhraseMatcher
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.neighbors import NearestNeighbors
+
+import spacy
+nlp = spacy.load('en_core_web_sm')
+from spacy.matcher import PhraseMatcher
+
 from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFPageInterpreter
 from pdfminer.pdfinterp import PDFResourceManager
@@ -25,8 +26,6 @@ from pdfminer.pdfpage import PDFPage
 # Developed Module
 import text_process
 
-
-
 resume_list = [] # stores all resumes
 resume_list_pdf = [] # Captures files with pdf extension
 resume_list_doc = [] # Captures files with doc extension
@@ -35,8 +34,8 @@ resume_list_docx = [] # Captures files with docx extension
 file_names = [] # STORES RESUME FILE NAMES
 job_desc_files = [] # stores jd paths
 
-path = '/Users/nithintata/Documents/GitHub/Capestone-project-group3/Original_Resumes'
-file_loc = '/Users/nithintata/Documents/GitHub/Capestone-project-group3/Original_Resumes/'
+#path = 'C:/Users/sampathi/PycharmProjects/Resume_Ranking/Automated-Resume-Ranking-System-master/Original_Resumes'
+path= '/Users/nithintata/Documents/GitHub/Capestone-project-group3/Original_Resumes'
 for file in glob.glob(path + '/*.pdf', recursive=True):
     resume_list_pdf.append(file)
 for file in glob.glob('**/*.doc', recursive=True):
@@ -87,19 +86,17 @@ def extract_text_from_pdf(files_list):
             resumes.append(text_process.normalize(text))
             
     for name in resume_list:
-        #print(name)
         temp = name.split('.')[0]
-        temp = temp.split('/')[1]
+        temp = temp.split('/')[-1]
         file_names.append(temp)
     df = {'Path':resume_list, 'File Name': file_names, 'Text':resumes}
     data = pd.DataFrame(df)
-    data.to_csv('out.csv')
     return data
 
-re_data = extract_text_from_pdf(resume_list)
-
+#file_loc = 'C:/Users/sampathi/PycharmProjects/Resume_Ranking/Automated-Resume-Ranking-System-master/Job_Description/'
+file_loc = '/Users/nithintata/Documents/GitHub/Capestone-project-group3/Original_Resumes/'
 def parsing_jd(jd_file_name):
-    path = file_loc + jd_file_name + '.rtf'
+    path = file_loc + jd_file_name + '.txt'
     for file in glob.glob(path, recursive=True):
         if not file in job_desc_files: 
             job_desc_files.append(file)
@@ -107,42 +104,25 @@ def parsing_jd(jd_file_name):
         jd = file.read()
     jd = summarize(jd, word_count=200)
     file.close()
-    jd = text_process.normalize(jd)
-    
-#     dict = {'Path':path, 'File Name': jd_file_name, 'Text':jd}
-#     df = pd.DataFrame(dict)
-    
+    jd = text_process.normalize(jd)    
     df = pd.DataFrame(columns=['Path', 'File Name', 'Text'])
     df.loc[0] = [path, jd_file_name, jd]
     return df
 
 def resume_df(files_list, jd_file_name):
-    
     df1 = extract_text_from_pdf(files_list)
-    print("DF1",df1)
     df2 = parsing_jd(jd_file_name)
-    print("DF2",df2)
     df3 = pd.concat([df1, df2], ignore_index = True)
-    
     tfidfVect = TfidfVectorizer()
-    print(df3['Text'])
     tfidf = tfidfVect.fit_transform(df3['Text'])
     job_desc = df3[df3['File Name'] == jd_file_name]
-    
     jd_tfidfVect = TfidfVectorizer()
     jd_tfidfVect = jd_tfidfVect.fit(df3['Text'])
     jd_tfidf = jd_tfidfVect.transform(job_desc['Text'])
-    
-#     feature_array = np.array(feature_names)
-#     tfidf_sorting = np.argsort(jd_tfidf.toarray()).flatten()[::-1]
-#     top_n = feature_array[tfidf_sorting][:10]
-    
     nbrs = NearestNeighbors(n_neighbors=5).fit(tfidf)
     distances, indices = nbrs.kneighbors(jd_tfidf)
     names_similar = pd.Series(indices.flatten()).map(df3.reset_index()['File Name'])
     result = pd.DataFrame({'Distance':distances.flatten(), 'Resume':names_similar})
-    
     return result[1:]
 
-print(resume_df(resume_list, 'sample').head())
-
+resume_df(resume_list, 'sample')
